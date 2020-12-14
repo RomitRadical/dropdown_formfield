@@ -3,24 +3,23 @@ library dropdown_formfield;
 import 'package:flutter/material.dart';
 
 class DropDownFormField extends FormField<dynamic> {
-  final String titleText;
-  final String hintText;
+  final Text hintText;
   final bool required;
   final String errorText;
   final dynamic value;
-  final List dataSource;
+  final List<Widget> dataSource;
   final String textField;
   final String valueField;
   final Function onChanged;
   final bool filled;
   final EdgeInsets contentPadding;
+  final TextStyle dataSourceTextStyle;
 
   DropDownFormField(
       {FormFieldSetter<dynamic> onSaved,
       FormFieldValidator<dynamic> validator,
       bool autovalidate = false,
-      this.titleText = 'Title',
-      this.hintText = 'Select one option',
+      this.hintText = Text('Select one option'),
       this.required = false,
       this.errorText = 'Please select one option',
       this.value,
@@ -29,6 +28,7 @@ class DropDownFormField extends FormField<dynamic> {
       this.valueField,
       this.onChanged,
       this.filled = true,
+      this.dataSourceTextStyle,
       this.contentPadding = const EdgeInsets.fromLTRB(12, 12, 8, 0)})
       : super(
           onSaved: onSaved,
@@ -49,10 +49,7 @@ class DropDownFormField extends FormField<dynamic> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<dynamic>(
                         isExpanded: true,
-                        hint: Text(
-                          hintText,
-                          style: TextStyle(color: Colors.grey.shade500),
-                        ),
+                        hint: hintText,
                         value: value == '' ? null : value,
                         onChanged: (dynamic newValue) {
                           state.didChange(newValue);
@@ -62,6 +59,7 @@ class DropDownFormField extends FormField<dynamic> {
                           return DropdownMenuItem<dynamic>(
                             value: item[valueField],
                             child: Text(item[textField],
+                                        style: dataSourceTextStyle,
                                 overflow: TextOverflow.ellipsis),
                           );
                         }).toList(),
