@@ -7,7 +7,7 @@ class DropDownFormField extends FormField<dynamic> {
   final bool required;
   final String errorText;
   final dynamic value;
-  final List<Widget> dataSource;
+  final List dataSource;
   final String textField;
   final String valueField;
   final Function onChanged;
